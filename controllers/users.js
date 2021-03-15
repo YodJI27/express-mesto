@@ -5,45 +5,31 @@ module.exports.getUsers = (req, res) =>
     .then((users) => {
       res.status(200).send(users);
     })
-    .catch((_) =>
-      res
-        .status(500)
-        .send({ message: "Произошла ошибка. Они всегда происходят..." })
-    );
+    .catch((_) => res.status(500).send({ message: "Что-то пошло не так" }));
 
 module.exports.getProfile = (req, res) =>
   User.findOne({ _id: req.params.id })
     .then((user) => {
       if (!user) {
-        res.status(404).send({ message: "Нет пользователя с таким id" });
+        return res.status(404).send({ message: "Нет пользователя с таким id" });
       }
-      res.status(200).send(user);
+      return res.status(200).send(user);
     })
-    .catch((_) =>
-      res
-        .status(500)
-        .send({ message: "Произошла ошибка. Они всегда происходят..." })
-    );
+    .catch((_) => res.status(500).send({ message: "Что-то пошло не так" }));
 
 module.exports.createProfile = (req, res) => {
   const { name, about, avatar } = req.body;
 
   User.create({ name, about, avatar })
     .then((user) => {
-      if (user) {
-        res.status(400).send({ message: "Пользователь уже существует" });
-      }
-      res.status(200).send({
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
-      });
+      res.status(200).send(user);
     })
-    .catch((_) =>
-      res
-        .status(500)
-        .send({ message: "Произошла ошибка. Они всегда происходят..." })
-    );
+    .catch((err) => {
+      if (err.name === "ValidationError") {
+        return res.status(400).send({ message: "Ошибка валидации" });
+      }
+      return res.status(500).send({ message: "Что-то пошло не так" });
+    });
 };
 
 module.exports.updatePrfoile = (req, res) => {
@@ -54,11 +40,12 @@ module.exports.updatePrfoile = (req, res) => {
     .then((user) => {
       res.status(200).send(user);
     })
-    .catch((_) =>
-      res
-        .status(500)
-        .send({ message: "Произошла ошибка. Они всегда происходят..." })
-    );
+    .catch((err) => {
+      if (err.name === "ValidationError") {
+        return res.status(400).send({ message: "Ошибка валидации" });
+      }
+      return res.status(500).send({ message: "Что-то пошло не так" });
+    });
 };
 
 module.exports.updateAvatar = (req, res) => {
@@ -69,9 +56,10 @@ module.exports.updateAvatar = (req, res) => {
     .then((user) => {
       res.status(200).send(user);
     })
-    .catch((_) =>
-      res
-        .status(500)
-        .send({ message: "Произошла ошибка. Они всегда происходят..." })
-    );
+    .catch((err) => {
+      if (err.name === "ValidationError") {
+        return res.status(400).send({ message: "Ошибка валидации" });
+      }
+      return res.status(500).send({ message: "Что-то пошло не так" });
+    });
 };
