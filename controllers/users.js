@@ -43,7 +43,12 @@ module.exports.updatePrfoile = (req, res) => {
 
   User.findByIdAndUpdate(id, { name, about }, { new: true })
     .then((user) => {
-      res.status(200).send(user);
+      if (!user) {
+        return res
+          .status(404)
+          .send({ message: "Пользователя c таким id не существует" });
+      }
+      return res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === "ValidationError") {
@@ -61,7 +66,12 @@ module.exports.updateAvatar = (req, res) => {
 
   User.findByIdAndUpdate(id, { avatar }, { new: true })
     .then((user) => {
-      res.status(200).send(user);
+      if (!user) {
+        return res
+          .status(404)
+          .send({ message: "Пользователя с таким id не существует" });
+      }
+      return res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === "ValidationError") {

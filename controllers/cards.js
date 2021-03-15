@@ -25,13 +25,13 @@ module.exports.deleteCards = (req, res) => {
   Cards.findByIdAndRemove({ _id: id })
     .then((card) => {
       if (!card) {
-        return res.status(400).send({ message: "Нет карточки с таким id" });
+        return res.status(404).send({ message: "Нет карточки с таким id" });
       }
       return res.status(200).send(cardInfo);
     })
     .catch((err) => {
       if (err.name === "CastError") {
-        return res.status(400).send({ message: "Переданный id не корректен"});
+        return res.status(400).send({ message: "Переданный id не корректен" });
       }
       return res.status(500).send({ message: "Что-то пошло не так" });
     });
@@ -45,13 +45,13 @@ module.exports.likeCard = (req, res) => {
   )
     .then((card) => {
       if (!card) {
-        return res.status(400).send({ message: "Карточка не найдена" });
+        return res.status(404).send({ message: "Карточка не найдена" });
       }
       return res.status(200).send(card);
     })
     .catch((err) => {
       if (err.name === "CastError") {
-        return res.status(400).send({ message: "Переданный id не корректен"});
+        return res.status(400).send({ message: "Переданный id не корректен" });
       }
       return res.status(500).send({ message: "Что-то пошло не так" });
     });
@@ -65,13 +65,13 @@ module.exports.dislikeCard = (req, res) => {
   )
     .then((card) => {
       if (!card) {
-        return res.status(400).send({ message: "Карточка не найдена" });
+        return res.status(404).send({ message: "Карточка не найдена" });
       }
       return res.status(200).send(card);
     })
     .catch((err) => {
       if (err.name === "CastError") {
-        return res.status(400).send({ message: "Переданный id не корректен"});
+        return res.status(400).send({ message: "Переданный id не корректен" });
       }
       return res.status(500).send({ message: "Что-то пошло не так" });
     });
