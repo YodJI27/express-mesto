@@ -15,7 +15,12 @@ module.exports.getProfile = (req, res) =>
       }
       return res.status(200).send(user);
     })
-    .catch((_) => res.status(500).send({ message: "Что-то пошло не так" }));
+    .catch((err) => {
+      if (err.name === "CastError") {
+        return res.status(400).send({ message: "Переданный id не корректен" });
+      }
+      return res.status(500).send({ message: "Что-то пошло не так" });
+    });
 
 module.exports.createProfile = (req, res) => {
   const { name, about, avatar } = req.body;
@@ -43,6 +48,8 @@ module.exports.updatePrfoile = (req, res) => {
     .catch((err) => {
       if (err.name === "ValidationError") {
         return res.status(400).send({ message: "Ошибка валидации" });
+      } else if (err.name === "CastError") {
+        return res.status(400).send({ message: "Переданный id не корректен" });
       }
       return res.status(500).send({ message: "Что-то пошло не так" });
     });
@@ -59,6 +66,8 @@ module.exports.updateAvatar = (req, res) => {
     .catch((err) => {
       if (err.name === "ValidationError") {
         return res.status(400).send({ message: "Ошибка валидации" });
+      } else if (err.name === "CastError") {
+        return res.status(400).send({ message: "Переданный id не корректен" });
       }
       return res.status(500).send({ message: "Что-то пошло не так" });
     });
