@@ -33,7 +33,13 @@
 **Cайт**
  
 [Ссылка на сайт](https://yodji27.github.io/mesto-react/)
- 
+
+**Автор**  
+Илья Шнырев  
+Email: shnyrev.iilya@yandex.ru    
+Вконтакте: https://vk.com/shnerov  
+Habr: https://career.habr.com/yodji27  
+
 
 **Директории**
 
@@ -47,8 +53,3 @@
 
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload  
-
-**Автор**  
-Илья Шнырев  
-Email: YodJI62@yandex.ru  
-Вконтакте: https://vk.com/shnerov  
